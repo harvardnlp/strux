@@ -6,7 +6,6 @@ import time
 class Semiring:
     @classmethod
     def matmul(cls, a, b):
-        "Generalized tensordot. Classes should override."
         a = a[..., np.newaxis]
         b = b[..., np.newaxis, :, :]
         c = cls.times(a, b)
@@ -14,14 +13,12 @@ class Semiring:
 
     @classmethod
     def dot(cls, a, b):
-        "Dot product along last dim."
         a = a[..., np.newaxis, :]
         b = b[..., np.newaxis]
         return cls.matmul(a, b).squeeze(-1).squeeze(-1)
 
     @classmethod
     def times(cls, *ls):
-        "Multiply a list of tensors together"
         cur = ls[0]
         for l in ls[1:]:
             cur = cls.mul(cur, l)
@@ -54,6 +51,7 @@ class MaxSemiring(Semiring):
         return jax.max(xs, axis=dim)
 
 def run(log_potentials, length, semiring="Log"):
+    "Main code, associative forward-backward"
     if semiring == "Log":
         semiring = LogSemiring
     else:
