@@ -25,8 +25,8 @@ class CKY_CRF(_Struct):
         # def loop(w, chart):
             left = slice(None, N - w)
             right = slice(w, None)
-            Y = chart[A][left, :w]
-            Z = chart[B][right, N - w :]
+            Y = chart[A, left, :w]
+            Z = chart[B, right, N - w :]
             score = np.diagonal(reduced_scores, w, 0, 1)
             new = semiring.times(semiring.dot(Y, Z), score)
             chart = jax.ops.index_update(chart, jax.ops.index[A, left, w], new)
