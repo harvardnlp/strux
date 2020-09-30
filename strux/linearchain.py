@@ -9,7 +9,7 @@ class LinearChain(_Struct):
         N, C, C2 = log_potentials.shape
         assert C == C2, "Transition shape doesn't match"
         log_N = np.log2(N)
-        assert log_N % 1 == 0.0
+        #assert log_N % 1 == 0.0
 
         extra = np.where(np.eye(C, C), semiring.one, semiring.zero)
         chart = np.where(np.arange(N).reshape(N, 1, 1) < length - 1, log_potentials, extra)    
