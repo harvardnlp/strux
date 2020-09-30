@@ -8,7 +8,7 @@ class LinearChain(_Struct):
         semiring = self.semiring
         N, C, C2 = log_potentials.shape
         assert C == C2, "Transition shape doesn't match"
-        log_N = jnp.array(np.log2(N), int)
+        log_N = np.array(np.log2(N), int)
         #assert log_N % 1 == 0.0
 
         extra = np.where(np.eye(C, C), semiring.one, semiring.zero)
