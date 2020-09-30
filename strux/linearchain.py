@@ -8,12 +8,12 @@ class LinearChain(_Struct):
         semiring = self.semiring
         N, C, C2 = log_potentials.shape
         assert C == C2, "Transition shape doesn't match"
-        log_N = np.log2(N)
+        log_N = jnp.array(np.log2(N), int)
         #assert log_N % 1 == 0.0
 
         extra = np.where(np.eye(C, C), semiring.one, semiring.zero)
         chart = np.where(np.arange(N).reshape(N, 1, 1) < length - 1, log_potentials, extra)    
-        for _ in range(int(log_N)):
+        for _ in range(log_N):
             chart = semiring.matmul(chart[1::2], chart[0::2])
         return semiring.sum(semiring.sum(chart[0]))
 
