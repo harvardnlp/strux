@@ -22,7 +22,6 @@ class CKY_CRF(_Struct):
 
         # Run
         for w in range(1, N):
-        # def loop(w, chart):
             left = slice(None, N - w)
             right = slice(w, None)
             Y = chart[A, left, :w]
